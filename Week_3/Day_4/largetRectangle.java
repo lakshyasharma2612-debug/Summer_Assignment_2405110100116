@@ -1,0 +1,41 @@
+package Week_3.Day_4;
+
+import java.util.Stack;
+
+public class largetRectangle {
+ public int largestRectangleArea(int[] heights) {
+       Stack<Integer> st=new Stack<>();
+       int max=0;
+       st.push(0);
+       for (int i=1;i<heights.length;i++)
+       {
+        while(!st.isEmpty() && heights[i]<heights[st.peek()])
+        {
+            max=getmax(heights,st,max,i);
+        }
+            st.push(i);
+       }
+            int l=heights.length;
+            while(!st.isEmpty())
+            {
+                max=getmax(heights,st,max,l);
+            }
+       
+       return max;
+
+    }
+        private static int getmax(int[] arr,Stack<Integer> st,int max,int i)
+        {
+             int area;
+             int popped=st.pop();
+             if(st.isEmpty())
+             {
+                area=arr[popped]*i;
+             }
+             else
+             {
+                area=arr[popped]*(i-1-st.peek());
+             }
+             return Math.max(area,max);
+        }
+}
